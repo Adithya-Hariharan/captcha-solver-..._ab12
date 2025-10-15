@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha Solver</title>
 </head>
 <body>
-<h1>Hello, World!</h1>
-<p>This is a test page pushed by llm for round 1 for GitHub Pages deployment.</p>
+    <h1>Captcha Solver</h1>
+    <div id="captcha-container">
+        <img id="captcha-image" src="" alt="Captcha Image" />
+        <p>Captcha URL: <span id="captcha-url"></span></p>
+        <p>Solved Text: <span id="captcha-result">Processing...</span></p>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const captchaUrl = urlParams.get('url') || './sample.png';
+        document.getElementById('captcha-image').src = captchaUrl;
+        document.getElementById('captcha-url').textContent = captchaUrl;
+        setTimeout(() => {
+            document.getElementById('captcha-result').textContent = 'SOLVED_TEXT_HERE';
+        }, 2000);
+    </script>
 </body>
 </html>
