@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captcha Solver</title>
+    <title>Captcha Solver v2 - PNG & SVG</title>
 </head>
 <body>
-    <h1>Captcha Solver</h1>
-    <div id="captcha-container">
-        <img id="captcha-image" src="" alt="Captcha Image" />
-        <p>Captcha URL: <span id="captcha-url"></span></p>
-        <p>Solved Text: <span id="captcha-result">Processing...</span></p>
-    </div>
+    <h1>Captcha Solver v2 (PNG & SVG)</h1>
+    <div id="captcha-container"></div>
+    <p>Captcha URL: <span id="captcha-url"></span></p>
+    <p>Solved Text: <span id="captcha-result">Processing...</span></p>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const captchaUrl = urlParams.get('url') || './sample.png';
-        document.getElementById('captcha-image').src = captchaUrl;
-        document.getElementById('captcha-url').textContent = captchaUrl;
-        setTimeout(() => {
-            document.getElementById('captcha-result').textContent = 'SOLVED_TEXT_HERE';
-        }, 2000);
+    const urlParams = new URLSearchParams(window.location.search);
+    const captchaUrl = urlParams.get('url') || './sample.png';
+    document.getElementById('captcha-url').textContent = captchaUrl;
+    let ext = captchaUrl.split('.').pop().toLowerCase();
+    let container = document.getElementById('captcha-container');
+    if (ext === 'svg') {
+        // Display SVG directly
+        fetch(captchaUrl).then(d=>d.text()).then(svg=>{
+            container.innerHTML = svg;
+        });
+    } else {
+        // Display PNG or other as image
+        container.innerHTML = `<img src="${captchaUrl}" alt="Captcha Image" />`;
+    }
+    // Simulate solved text after delay
+    setTimeout(() => {
+        document.getElementById('captcha-result').textContent = 'SOLVED_TEXT_HERE';
+    }, 2000);
     </script>
 </body>
 </html>
